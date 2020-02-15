@@ -1,5 +1,5 @@
 #coding: utf-8
-from wechat.domain.reply import *
+from wechat.model.wx_reply import *
 from wechat.service.kefu import WxKefuService
 
 

@@ -14,7 +14,7 @@ config.py  配置文件
     
 ## Install
 
-支持Python2和3
+支持Python2和Python3。测试版本:Python2.7和Python3.7,可以正常运行。
 
 pip install -r requirements.txt
 

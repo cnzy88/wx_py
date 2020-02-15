@@ -1,12 +1,14 @@
 #coding: utf-8
-from wechat.model.wx_reply import *
 from wechat.service.kefu import WxKefuService
 
 
 def handle(wx_message):
     """
-    扫码处理
+    取关处理
     :param wx_message: WxMessage
     :return: String
     """
-    pass
+    result = 'success'
+    print('取关详情:%s' % wx_message)
+
+    return result

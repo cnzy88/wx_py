@@ -4,7 +4,8 @@ from flask import request
 from web import app
 from config import WECHAT_CONF
 from wechat.route import route_handle
-from wechat.domain.receive import handle_xml_data
+from utils.xml_help import XmlOperate
+from wechat.model.wx_message import WxMessage
 
 
 @app.route('/wechat_portal/message/<appid>', methods=['GET'])
@@ -39,9 +40,17 @@ def get(appid):
 
 @app.route('/wechat_portal/message/<appid>', methods=['POST'])
 def post(appid):
+    """
+    微信推送消息统一入口,后续再经由route_handle分发到对应的handler
+    :param appid:
+    :return:
+    """
     xml_data = request.data
     print('xml data from wechat: %s' % xml_data)
 
-    wx_message = handle_xml_data(xml_data, appid)
+    data = XmlOperate.xml_to_dict(xml_data)
+    data['appid'] = appid
+    wx_message = WxMessage(**data)
+    print('wx_message: %s' % wx_message)
 
     return route_handle(wx_message)
