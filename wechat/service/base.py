@@ -3,7 +3,7 @@ import os
 import requests
 from wechat.exception import NotAccessTokenException
 from config import WECHAT_CONF
-from db.db_redis import RedisOperate
+from utils.db_redis import RedisOperate
 from config import WX_ACCESS_TOKEN_STORE_WAY
 
 class WxBaseService(object):

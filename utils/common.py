@@ -45,16 +45,6 @@ def get_dir_files(dir):
     for root, dirs, files in os.walk(dir):
         return files
 
-def html_to_pdf(content, new_file_name):
-    """
-    将html转成pdf
-    :return:
-    """
-    import pdfkit
-    config = pdfkit.configuration(wkhtmltopdf=r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe")
-
-    return pdfkit.from_string(content, new_file_name, configuration=config)
-
 def change_dic_to_json_str(obj):
     """
     将python字典转为json字符串
