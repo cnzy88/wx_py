@@ -1,6 +1,6 @@
 #coding: utf-8
 import json
-from base import WxBaseService
+from wechat.service.base import WxBaseService
 from utils.common import generate_random_str
 from config import WECHAT_CONF
 
@@ -94,4 +94,4 @@ if __name__ == '__main__':
     # print login_service.get_authorize_url('https://group.rocketai.cn/login/xxx', scope="snsapi_userinfo")
     # print login_service.get_login_access_token('011gQto91Y10KL1jBWr918Auo91gQtoy')
     result = login_service.get_user_info('30_KaHYT7376QfK9TOwYfWoRZL_7k0RiBnHKwgeoan0TmX5qZ7L9h0yx6WkrDL1Firg85lkc5AORaPTH0ASY08vJA', '123')
-    print change_dic_to_json_str(result)
+    print(change_dic_to_json_str(result))

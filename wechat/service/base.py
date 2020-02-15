@@ -11,7 +11,7 @@ class WxBaseService(object):
     #获取accessToken的地址
     GET_ACCESS_TOKEN_URL = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}'
     ACCESS_TOKEN_REDIS_KEY = 'access_token_{0}'
-    ACCESS_TOKEN_FILENAME = 'access_token.txt'
+    ACCESS_TOKEN_FILENAME = 'access_token_{0}.txt'
 
     def __init__(self, appid):
         self.appid = appid
@@ -27,8 +27,7 @@ class WxBaseService(object):
             self.redis = RedisOperate(db=0)
             self.redis.set(self.ACCESS_TOKEN_REDIS_KEY.format(self.appid), self.access_token, 7200)
         elif way == 2:
-            mode = 'a' if os.path.exists(self.ACCESS_TOKEN_FILENAME) else 'w'
-            with open(self.ACCESS_TOKEN_FILENAME, mode) as f:
+            with open(self.ACCESS_TOKEN_FILENAME.format(self.appid), 'w') as f:
                 f.write(self.access_token)
 
     def _get_local_access_token(self, way):
@@ -42,7 +41,7 @@ class WxBaseService(object):
             return self.redis.get(self.ACCESS_TOKEN_REDIS_KEY.format(self.appid))
         elif way == 2:
             try:
-                with open(self.ACCESS_TOKEN_FILENAME, 'r') as f:
+                with open(self.ACCESS_TOKEN_FILENAME.format(self.appid), 'r') as f:
                     content = f.read()
             except:
                 content = None
@@ -64,9 +63,9 @@ class WxBaseService(object):
         if r.status_code == 200:
             result = r.json()
             if 'access_token' in result:
-                self.access_token = access_token = result['access_token']
+                self.access_token = result['access_token']
                 self._store_access_token(WX_ACCESS_TOKEN_STORE_WAY)
-                return access_token
+                return self.access_token
             else:
                 print('获取accessToken失败，错误信息:%s' % result)
                 return None
@@ -89,7 +88,7 @@ class WxBaseService(object):
         if not self.access_token:
             raise NotAccessTokenException
         if url.find('?') >= 0:
-            return url + '&access_token=' + self.access_token
+           return url + '&access_token=' + self.access_token
         else:
             return url + '?access_token=' + self.access_token
 
@@ -104,24 +103,24 @@ class WxBaseService(object):
         :return:   Dictionary
         """
         try:
-            url = self.join_url(url)
+            joined_url = self.join_url(url)
         except NotAccessTokenException:
             print('access token is empty')
             return None
 
-        r = requests.post(url, data=data, json=json, files=file)
+        r = requests.post(joined_url, data=data, json=json, files=file)
         if r.status_code == 200:
             try:
-                data = r.json()
+                result = r.json()
             except:
-                data = None
-            if data:
-                if data.get('errcode') in (42001,40001,40014) and expire_retry:
+                result = None
+            if result:
+                if result.get('errcode') in (42001,40001,40014) and expire_retry:
                     self.get_access_token_from_wx()
                     return self.post(url, json=json, file=file, data=data, expire_retry=False)
 
-                print('response:%s' % data)
-                return data
+                print('response:%s' % result)
+                return result
             else:
                 print('response content:%s' % r.content)
                 return r.content
@@ -138,26 +137,27 @@ class WxBaseService(object):
         :param expire_retry:
         :return:
         """
+        joined_url = url
         if join_access_token:
             try:
-                url = self.join_url(url)
+                joined_url = self.join_url(url)
             except NotAccessTokenException:
                 print('access token is empty')
                 return None
 
-        r = requests.get(url, data=data, json=json)
+        r = requests.get(joined_url, data=data, json=json)
         if r.status_code == 200:
-            data = r.json()
-            if data.get('errcode') in (42001,40001,40014) and expire_retry:
+            result = r.json()
+            if result.get('errcode') in (42001,40001,40014) and expire_retry:
                 self.get_access_token_from_wx()
                 return self.get(url, json=json, data=data, expire_retry=False)
 
-            print('response:%s' % data)
-            return data
+            print('response:%s' % result)
+            return result
         else:
             print('status_code: %d' % r.status_code)
             return None
 
 if __name__ == '__main__':
     baseService = WxBaseService('wxbd77bc158b32c535')
-    print baseService.get_access_token_from_wx()
+    print(baseService.get_access_token_from_wx())

@@ -1,2 +1,2 @@
-from msg import *
-from event import *
+from .msg import *
+from .event import *

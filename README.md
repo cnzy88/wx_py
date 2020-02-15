@@ -14,6 +14,8 @@ config.py  配置文件
     
 ## Install
 
+支持Python2和3
+
 pip install -r requirements.txt
 
 ## Usage

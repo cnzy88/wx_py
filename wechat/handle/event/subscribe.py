@@ -13,6 +13,6 @@ def handle(wx_message):
     from_user = wx_message.from_user
 
     kefu_service = WxKefuService(wx_message.appid)
-    kefu_service.send_text_message(from_user, '欢迎您的到来!')
+    kefu_service.send_text_message(from_user, u'欢迎您的到来!')
 
     return result

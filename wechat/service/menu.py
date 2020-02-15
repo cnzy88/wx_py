@@ -1,5 +1,5 @@
 #coding: utf-8
-from base import WxBaseService
+from wechat.service.base import WxBaseService
 
 class WxMenuService(WxBaseService):
 
@@ -42,4 +42,4 @@ if __name__ == '__main__':
 }
     # print menu_service.add_menu(data)
     from utils.common import change_dic_to_json_str
-    print change_dic_to_json_str(menu_service.add_menu(data))
+    print(change_dic_to_json_str(menu_service.add_menu(data)))

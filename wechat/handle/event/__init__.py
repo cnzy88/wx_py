@@ -1,2 +1,2 @@
-import subscribe
-import scan
+from . import scan
+from . import subscribe

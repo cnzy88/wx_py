@@ -1,5 +1,5 @@
 #coding: utf-8
-from base import WxBaseService
+from wechat.service.base import WxBaseService
 
 class WxTemplateMsgService(WxBaseService):
 
@@ -22,7 +22,7 @@ class WxTemplateMsgService(WxBaseService):
         body = {}
         body['template_id_short'] = template_id_short
         result = self.post(self.GET_TEMPALTE_MSG_ID_URL, json=body)
-        print result
+        print(result)
 
     def get_template_list(self):
         """
@@ -94,4 +94,4 @@ if __name__ == '__main__':
         }
     }
     # print template_service.send_template_msg('oBDdnwjeF5LcLCNjefX5n5TG8Blk', '5X2iCrQ_V7sdBxdAHweBKa0mC8G3JsRGOkt8G0NdhPw', data)
-    print template_service.get_template_list()
+    print(template_service.get_template_list())

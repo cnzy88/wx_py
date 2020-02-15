@@ -3,7 +3,7 @@ import hashlib
 import string
 import random
 import time
-from base import WxBaseService
+from wechat.service.base import WxBaseService
 from wechat.exception import WeixinPayError
 from utils.xml_help import XmlOperate
 from config import WECHAT_CONF
@@ -36,7 +36,7 @@ class WxPayService(WxBaseService):
         raw = [(k, str(raw[k]) if isinstance(raw[k], (int, float)) else raw[k]) for k in sorted(raw.keys())]
         s = "&".join("=".join(kv) for kv in raw if kv[1])
         s += "&key={0}".format(self.pay_key)
-        return hashlib.md5(s).hexdigest().upper()
+        return hashlib.md5(s.encode("utf8")).hexdigest().upper()
 
     def _generate_nonce_str(self, length=32):
         """
@@ -152,4 +152,4 @@ if __name__ == '__main__':
     data = WECHAT_CONF[appid]['pay']
     data['openid'] = "oBDdnwjeF5LcLCNjefX5n5TG8Blk"
     data['total_fee'] = 100
-    print pay_service.unified_order(**data)
+    print(pay_service.unified_order(**data))

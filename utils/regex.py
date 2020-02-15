@@ -37,4 +37,4 @@ class RegexHelp(object):
 
 if __name__ == '__main__':
     source = "fdsf表格示例.2019-12文件名"
-    print RegexHelp.match_one(source, "\d+-\d+")
+    print(RegexHelp.match_one(source, "\d+-\d+"))

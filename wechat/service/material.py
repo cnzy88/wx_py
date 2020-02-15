@@ -1,5 +1,5 @@
 #coding: utf-8
-from base import WxBaseService
+from wechat.service.base import WxBaseService
 
 class WxMaterialService(WxBaseService):
 
@@ -26,5 +26,5 @@ class WxMaterialService(WxBaseService):
 
 if __name__ == '__main__':
     material_service = WxMaterialService('wxbd77bc158b32c535')
-    print material_service.upload_image('cat.jpg')
+    print(material_service.upload_image('cat.jpg'))
 

@@ -15,6 +15,6 @@ def handle(wx_message):
     if content == '测试':
         # return TextReply(from_user, '测试').send()
         kefu_service = WxKefuService(wx_message.appid)
-        kefu_service.send_text_message(from_user, '这是一个测试')
+        kefu_service.send_text_message(from_user, u'这是一个测试')
 
     return result

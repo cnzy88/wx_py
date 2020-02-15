@@ -1,13 +1,8 @@
 #coding: utf-8
-import sys
 import os
 import datetime
 import random
 import string
-from uuid import uuid1
-
-reload(sys)
-sys.setdefaultencoding('utf-8')
 
 def count_time(func):
     """

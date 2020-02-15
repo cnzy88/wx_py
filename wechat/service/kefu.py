@@ -1,6 +1,6 @@
 #coding: utf-8
 import json
-from base import WxBaseService
+from wechat.service.base import WxBaseService
 
 class WxKefuService(WxBaseService):
 
@@ -46,4 +46,5 @@ class WxKefuService(WxBaseService):
 
 if __name__ == '__main__':
     kefu_service = WxKefuService(appid='wxbd77bc158b32c535')
-    print kefu_service.send_image_message('oLbr-wVN2vIOOWfFC7CgQBtIb39c', 'RzDDEEU1HkeQiIAQxS17iVJRw3ttFTgKGhjeqVkY1cc')
+    # print(kefu_service.send_image_message('oLbr-wVN2vIOOWfFC7CgQBtIb39c', 'RzDDEEU1HkeQiIAQxS17iVJRw3ttFTgKGhjeqVkY1cc'))
+    print(kefu_service.send_text_message('oLbr-wVN2vIOOWfFC7CgQBtIb39c', '测试'))
